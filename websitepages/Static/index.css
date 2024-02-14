@@ -1,0 +1,25 @@
+.Card-text{
+  color: green;
+  font-weight: 600px;
+}
+
+.Card-text{
+  font-weight: 900px;
+}
+
+.Card-text{
+  height: 400px;
+}
+
+.row{
+  height: 200px;
+}
+
+.Card-1{
+  height: 50px;
+}
+
+.Card-footer{
+  position: relative;
+  margin-top:100%;
+}
