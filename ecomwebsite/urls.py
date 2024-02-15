@@ -21,4 +21,5 @@ from shopping import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',views.index,name='index'),
+    path('<int:id>/',views.detail,name='deatil'),
 ]
