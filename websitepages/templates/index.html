@@ -147,19 +147,19 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
 });
 
-var cartString="";
 DisplayCart(cart);
 
 function DisplayCart(cart){ 
-   html:true,
-   cartString += "<strong>This is a <em>custom</em> HTML message</strong>";
+ var cartString="";
+   html:true;
+   cartString += "<a href='/test'>Check-out</a>";
    var cartIndex = 1;
    for(var x in cart){
     cartString += cartIndex;
     cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x]+ "</br>";
     cartIndex += 1;
    }
-   
+
    //document.write(cartString += "<a href='/checkout'></a>");
    //cartString += <a href="#" onclick="window.open('/checkout');\"> link </a>);
    document.getElementById("cart").setAttribute('data-bs-content',cartString); 

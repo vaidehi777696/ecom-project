@@ -20,3 +20,8 @@ def index(request):
 def detail(request,id):
     product_objects=Products.objects.get(id=id)
     return render(request,'detail.html',{"product_objects":product_objects})
+
+
+def test(request):
+    product_objects=Products.objects.all()
+    return render(request,'test.html',{"product_objects":product_objects})
