@@ -25,3 +25,8 @@ def detail(request,id):
 def test(request):
     product_objects=Products.objects.all()
     return render(request,'test.html',{"product_objects":product_objects})
+
+def checkout(request):
+    product_objects=Products.objects.all()
+    return render(request,'checkout.html',{"product_objects":product_objects})
+    

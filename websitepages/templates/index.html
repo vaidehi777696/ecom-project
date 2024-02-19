@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>shopping site</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -35,7 +35,7 @@
                   <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                  <button id="cart" type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-placement="top" title="HTML Content Popover" data-bs-html="true" data-bs-content="<strong>This is a <em>custom</em> HTML message</strong>">
+                  <button id="cart" type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-placement="top" title="HTML Content Popover" data-bs-html="true" data-bs-content="<button>checkout</button>">
                     Cart(0)
                   </button>
                 </li>
@@ -52,6 +52,9 @@
           </nav>
           </div>
        </div>
+       <marquee width="100%" direction="left" height="60px">
+        wellcome to my web site 
+        </marquee>
         <div class="row">
             <div class="col-md-12">
                <form class="card-1 card-sm">
@@ -115,57 +118,100 @@
 
     </div>
 </body>
+
+
 <script type="text/javascript">
-   console.log('this is working');
-   if(localStorage.getItem('cart')==null){
-     var cart = {};
-   }
-   else{
-    cart = JSON.parse(localStorage.getItem('cart'));
-   }
-  $(document).on('click','.atc',function()
-   {
-    console.log('added to cart');
-    var item_id = this.id.toString();
+  console.log('this is working');
+
+  if(localStorage.getItem('cart') == null){
+      var cart = {};
+  }
+  else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+      document.getElementById("cart").innerHTML = "cart(" + Object.keys(cart).length + ")";
+  }
+
+  $(document).on('click', '.atc', function() {
+      console.log('added to cart');
+      var item_id = this.id.toString();
+        // Find the parent product card and retrieve the item price
+    var itemPrice = parseFloat($(this).closest('.card').find('.item-price').text().replace("$", ""));
     console.log(item_id);
-    if (cart[item_id]!=undefined){
-      cart[item_id]= cart[item_id] +1 ;
-    }
-    else{
-      cart[item_id]=1;
-    }
-     console.log(cart);
-     localStorage.setItem('cart',JSON.stringify(cart));
-     document.getElementById("cart").innerHTML ="cart("+ Object.keys(cart).length +")";
-     var size = Object.keys(cart).length;
-     console.log(size)
-   });
-
-   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  document.getElementById("cart").setAttribute('data-bs-content','this is your cart')
-  return new bootstrap.Popover(popoverTriggerEl)
-});
-
-DisplayCart(cart);
-
-function DisplayCart(cart){ 
- var cartString="";
-   html:true;
-   cartString += "<a href='/test'>Check-out</a>";
-   var cartIndex = 1;
-   for(var x in cart){
-    cartString += cartIndex;
-    cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x]+ "</br>";
-    cartIndex += 1;
-   }
-
-   //document.write(cartString += "<a href='/checkout'></a>");
-   //cartString += <a href="#" onclick="window.open('/checkout');\"> link </a>);
-   document.getElementById("cart").setAttribute('data-bs-content',cartString); 
       
-}
+
+     
+      if (cart[item_id] != undefined) {
+          cart[item_id].itemCount = cart[item_id].itemCount + 1;
+          window.confirm("added");
+      }
+      else {
+          cart[item_id] = { itemCount: 1, itemName: $(this).parent().find("#nm" + item_id).html() };
+      }
+      console.log(cart);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      document.getElementById("cart").innerHTML = "cart(" + Object.keys(cart).length + ")";
+      var size = Object.keys(cart).length;
+      console.log(size);
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      document.getElementById("cart").setAttribute('data-bs-content', cartString);
+      return new bootstrap.Popover(popoverTriggerEl)
+  });
+
+  var cartString = "";
+  DisplayCart(cart);
 
 
+  function DisplayCart(cart) {
+      html: true;
+      cartString = "";
+      cartString += "<a href='#' class='btn btn-warning' id='checkoutBtn'>Check-out</a></br>"
+      var cartIndex = 1;
+      var totalCartPrice = 0;
+
+      for (var x in cart) {
+          var itemPrice = cart[x].itemPrice || 0;
+          var totalPrice = cart[x].itemCount * itemPrice;
+          totalCartPrice += totalPrice;
+
+          cartString += cartIndex;
+          cartString += ": Name: " + cart[x].itemName + ", Qty: " + cart[x].itemCount + ", Price: $" + itemPrice.toFixed(2)+ "</br>";
+          cartIndex += 1;
+      }
+      cartString += "<hr>Total Cart Price: $" + totalCartPrice.toFixed(2) + "</hr>";
+      document.getElementById("cart").setAttribute('data-bs-content', cartString);
+
+      // Handle checkout button click
+      $(document).on('click', '#checkoutBtn', function() {
+          // Create and display checkout page content
+          var checkoutContent = "<h2>Checkout Details:</h2>";
+          for (var x in cart) {
+              checkoutContent +=  x + ": Name: " + cart[x].itemName + ", Qty: " + cart[x].itemCount + ", Price: $" + itemPrice.toFixed(2)+ ", totalPrice: $" + totalCartPrice.toFixed(2)+ "<br>";
+          }
+         
+           // Display remove button for each item in the checkout page
+           checkoutContent += "<h3>Remove Items:</h3>";
+          for (var x in cart) {
+              checkoutContent += "Item: " + x + " <button class='btn btn-danger btn-sm removeItemBtn' data-itemid='" + x + "'>Remove</button><br>";
+          }
+
+          // Replace the current page content with checkout content
+          document.body.innerHTML = checkoutContent;
+
+          // Handle remove item button click
+          $(document).on('click', '.removeItemBtn', function () {
+                var item_id = $(this).data('itemid');
+                delete cart[item_id];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                DisplayCart(cart);
+            });
+      });
+  }
+
+  // Initial display of cart
+  DisplayCart(cart);
 </script>
+
 </html>
