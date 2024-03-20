@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+<div class="container">
+   <div class="row d-flex justify-content-center align-items-center vh-100">
+      <div class="col-md-6">
+         <div class="card" style="background-color:rgb(30, 210, 255);">
+           <div class="row justify-content-center mt-5">
+             <div class="col-md-6">
+                
+             <i class="material-icons" style="font-size:36px">&#xe7fe;<h2 class="text-center mb-6">SIGN UP</h2></i>
+            
+             <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="firstname" id="first_name" name="first_name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="lastname" id="last_name" name="last_name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Username" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="password" id="password" name="password" required>
+                </div>
+                <p> Already have account? <a href="/login">Login</a></p>
+                <button type="submit" class="btn btn-primary">Signup</button>
+            </form>
+             </div>
+          </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+</body>
+</html>
